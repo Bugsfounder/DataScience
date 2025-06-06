@@ -14,7 +14,7 @@ def myFunc():
     return lambda name: f"Hello {name}"
 
 
-# TODO: practice and understand (map, reduce, filter) functions in python
+# TODO: practice and understand (map, reduce, filter) functions in python  ---> Done
 
 print(greeting("Manisha"))
 m = myFunc()

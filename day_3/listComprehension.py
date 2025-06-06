@@ -26,7 +26,7 @@ words = ["Manisha", "java", "c++", "JavaScript"]
 filteredWord = [word for word in words if len(word) <= 3]
 print(filteredWord)
 
-# TODO: Try to understand Complex List comprehension
+# TODO: Try to understand Complex List comprehension  ---> DONE
 
 # create multi _D array:
 
