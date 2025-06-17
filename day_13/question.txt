@@ -1,0 +1,26 @@
+- Data Cleaning & Preprocessing
+You have a dataset with missing values in some of the independent variables used for predicting house prices. How would you handle missing data before fitting a linear regression model?
+
+
+- Feature Selection
+Suppose you are building a linear regression model to predict employee salaries based on years of experience, education level, and job role. How would you determine which features are most influential in the prediction?
+
+
+- Model Evaluation
+After training a linear regression model, you get an R-squared value of 0.85. What does this indicate about the model's performance? Is a high R-squared value always desirable?
+
+
+- Multicollinearity Issue
+Imagine you're building a linear regression model using two highly correlated features: "advertising budget" and "marketing expenses." How would you detect and address multicollinearity in this scenario?
+
+- Overfitting & Underfitting
+You notice that your training error is significantly lower than your test error. What might be causing this difference, and how could you adjust your linear regression model to improve generalization?
+
+- Residual Analysis
+After fitting a linear regression model, you plot the residuals and notice a clear pattern. What does this suggest about the assumptions of linear regression, and how would you address it?
+
+- Handling Categorical Variables
+You are working with a dataset where one independent variable is "City," with values like "New York," "Los Angeles," and "Chicago." How would you encode this variable for use in a linear regression model?
+
+- Application of Linear Regression
+You are given a dataset on stock prices and asked whether linear regression would be a good choice for predicting future prices. What factors would you consider before applying linear regression in this case?
