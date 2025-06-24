@@ -1,3 +1,4 @@
+# streamlit run project.py
 import streamlit as st
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -53,7 +54,33 @@ song_name = st.text_input("Enter a song name:")
 ytmusic = YTMusic()
 
 
-@functools.lru_cache(maxsize=100)
+def get_audio_url(video_id):
+    with YoutubeDL({"format": "bestaudio"}) as ydl:
+        info = ydl.extract_info(
+            f"https://www.youtube.com/watch?v={video_id}", download=False
+        )
+        for f in info["formats"]:
+            if f["ext"] == "m4a":
+                return f["url"]
+        return info["url"]  # fallback
+
+
+if song_name:
+    results = ytmusic.search(song_name, filter="songs")
+    if results:
+        song = results[0]
+        title = song["title"]
+        artist = song["artists"][0]["name"]
+        video_id = song["videoId"]
+        audio_url = get_audio_url(video_id)
+
+        st.markdown(f"### 🎧 {title} - {artist}")
+        st.audio(audio_url, format="audio/mp4")
+    else:
+        st.warning("No songs found.")
+
+
+# @functools.lru_cache(maxsize=100)
 def get_audio_url(video_id: str) -> str:
     with YoutubeDL({"format": "bestaudio"}) as ydl:
         info = ydl.extract_info(
@@ -85,18 +112,6 @@ if song_name:
                     song_data = yt_results[0]  # Only top result
                     video_id = song_data["videoId"]
 
-                    # with YoutubeDL({"format": "bestaudio"}) as ydl:
-                    #     info = ydl.extract_info(
-                    #         f"https://www.youtube.com/watch?v={video_id}",
-                    #         download=False,
-                    #     )
-                    #     for f in info["formats"]:
-                    #         if f["ext"] == "m4a":
-                    #             audio_url = f["url"]
-                    #             break
-                    #     else:
-                    #         audio_url = info["url"]
-
                     audio_url = get_audio_url(video_id)
 
                     st.audio(audio_url, format="audio/mp4")
@@ -111,6 +126,18 @@ if song_name:
         similar_songs = df[df["cluster"] == cluster_id].sample(5)
         for _, row in similar_songs.iterrows():
             st.write(f"{row['track_name']} - {row['artist_name']}")
+            try:
+                yt_results = ytmusic.search(
+                    f"{row['track_name']} {row['artist_name']}", filter="songs"
+                )
+                if yt_results:
+                    video_id = yt_results[0]["videoId"]
+                    audio_url = get_audio_url(video_id)
+                    st.audio(audio_url, format="audio/mp4")
+                else:
+                    st.info("No YouTube result.")
+            except Exception as e:
+                st.warning("🎧 Error in KMeans YouTube audio.")
 
     except IndexError:
         st.error("Song not found. Try another song title.")
